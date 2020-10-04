@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'dev') {
     urlDB = process.env.MONGO_URI;
 }
 
-process.env.URLDB = urlDB;
+process.env.URL_DB = urlDB;
 
 // ========================
 // Vencimiento del token => 60 segundos , 60 minutos, 24 horas, 30 dias
@@ -34,3 +34,8 @@ process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30
 // ========================
 
 process.env.SEED = process.env.SEED = 'este-es-el-seed-desarrollo'
+
+// ========================
+// Google client id
+// ========================
+process.env.CLIENT_ID = process.env.CLIENT_ID || '27284064686-ih76qo6av3n3lfp8lupvdh97itnsvf2e.apps.googleusercontent.com';

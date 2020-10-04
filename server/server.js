@@ -3,6 +3,7 @@ require('./config/config')
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
@@ -17,10 +18,13 @@ app.use(bodyParser.json())
 // rutas
 app.use(require('./routes/index'));
 
+// habilitar la carpeta public 
+app.use(express.static(path.resolve(__dirname, '../public')))
+
 
 // conexión mongoose
 // mongoose.connect('mongodb://localhost:27017/cafe', {
-mongoose.connect(`${process.env.URLDB}/cafe`, {
+mongoose.connect(`${process.env.URL_DB}/cafe`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
