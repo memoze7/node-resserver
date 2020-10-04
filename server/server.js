@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 // rutas
-app.use(require('./routes/usuario'));
+app.use(require('./routes/index'));
+
 
 // conexión mongoose
 // mongoose.connect('mongodb://localhost:27017/cafe', {

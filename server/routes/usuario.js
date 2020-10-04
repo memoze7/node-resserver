@@ -2,12 +2,16 @@ const express = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-const usuario = require('../models/usuario');
+const {
+    verificaToken,
+    verificaAdmin_Role
+} = require('../../middlewares/auth');
+
 
 const app = express();
 
 
-app.get('/usuario', function (req, res) {
+app.get('/usuario', verificaToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -22,7 +26,7 @@ app.get('/usuario', function (req, res) {
         .exec((err, usuarios) => {
 
             if (err) {
-                return res.status(400).json({
+                return res.status(500).json({
                     ok: false,
                     err
                 });
@@ -55,7 +59,7 @@ app.post('/usuario', function (req, res) {
 
     usuario.save((err, usuario) => {
         if (err) {
-            return res.status(400).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
@@ -71,7 +75,7 @@ app.post('/usuario', function (req, res) {
 
 });
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) {
     const id = req.params.id;
     const body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -81,7 +85,7 @@ app.put('/usuario/:id', function (req, res) {
         context: 'query'
     }, (err, usuario) => {
         if (err) {
-            return res.status(400).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
@@ -95,7 +99,7 @@ app.put('/usuario/:id', function (req, res) {
 
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) {
 
     const id = req.params.id;
 
@@ -107,7 +111,7 @@ app.delete('/usuario/:id', function (req, res) {
         context: 'query'
     }, (err, usuario) => {
         if (err) {
-            return res.status(400).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
