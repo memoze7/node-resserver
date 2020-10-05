@@ -55,9 +55,9 @@ app.post('/login', function (req, res) {
 
 });
 
-async function verify(token) {
+async function verify(ID) {
     const ticket = await client.verifyIdToken({
-        idToken: token,
+        idToken: ID,
         audience: process.env.CLIENT_ID
     });
     const payload = ticket.getPayload();
@@ -73,9 +73,9 @@ async function verify(token) {
 verify().catch(console.error);
 
 app.post('/google', async (req, res) => {
-    const token = req.body.idtoken;
+    const ID = req.body.idtoken;
 
-    const googleUser = await verify(token)
+    const googleUser = await verify(ID)
         .catch(err => {
             return res.status(403).json({
                 ok: false,

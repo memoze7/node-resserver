@@ -5,7 +5,7 @@ const _ = require('underscore');
 const {
     verificaToken,
     verificaAdmin_Role
-} = require('../../middlewares/auth');
+} = require('../middlewares/auth');
 
 
 const app = express();
@@ -35,6 +35,13 @@ app.get('/usuario', verificaToken, (req, res) => {
             Usuario.countDocuments({
                 estado: true
             }, (err, total) => {
+
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        err
+                    });
+                }
 
                 res.json({
                     ok: true,
@@ -131,29 +138,6 @@ app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, r
             usuario
         })
     });
-
-    // Usuario.findByIdAndRemove(id, (err, usuario) => {
-    //     if (err) {
-    //         return res.status(400).json({
-    //             ok: false,
-    //             err
-    //         });
-    //     }
-
-    //     if (!usuario) {
-    //         return res.status(400).json({
-    //             ok: false,
-    //             err: {
-    //                 message: 'Usuario no encontrado'
-    //             }
-    //         });
-    //     }
-
-    //     res.json({
-    //         ok: true,
-    //         usuario
-    //     });
-    // })
 
 });
 
