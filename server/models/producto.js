@@ -11,6 +11,10 @@ var productoSchema = new Schema({
         type: Number,
         required: [true, 'El precio únitario es necesario']
     },
+    img: {
+        type: String,
+        required: false
+    }, // no es obligatoria
     descripcion: {
         type: String,
         required: false
